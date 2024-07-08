@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebAPINetCoreDDD.Application\WebAPINetCoreDDD.Application.csproj" />
     <ProjectReference Include="..\WebAPINetCoreDDD.Domain\WebAPINetCoreDDD.Domain.csproj" />
   </ItemGroup>
 
