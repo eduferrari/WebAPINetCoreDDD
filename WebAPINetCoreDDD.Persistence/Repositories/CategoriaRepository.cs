@@ -14,12 +14,12 @@ public class CategoriaRepository : ICategoriaRepository
 
     public async Task<IEnumerable<Categoria>> ListarTodosAsync()
     {
-        return await _context.Categorias.ToListAsync();
+        return await _context.Categorias.Where(c => c.Status != Status.Deletado).ToListAsync();
     }
 
     public async Task<Categoria> BuscarPorIdAsync(int id)
     {
-        return await _context.Categorias.FindAsync(id);
+        return await _context.Categorias.Where(x => x.Status != Status.Deletado && x.Id == id).FirstOrDefaultAsync();
     }
 
     public async Task AdicionarAsync(Categoria categoria)
@@ -37,9 +37,11 @@ public class CategoriaRepository : ICategoriaRepository
     public async Task DeletarAsync(int id)
     {
         var categoria = await _context.Categorias.FindAsync(id);
-        if(categoria != null)
+        if(categoria is null)
         {
-            _context.Remove(categoria);
+            categoria.Status = Status.Deletado;
+
+            _context.Categorias.Update(categoria);
             await _context.SaveChangesAsync();
         }
     }
