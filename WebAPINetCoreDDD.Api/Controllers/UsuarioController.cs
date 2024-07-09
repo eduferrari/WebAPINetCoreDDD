@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using WebAPINetCoreDDD.Application.Interfaces;
+﻿using WebAPINetCoreDDD.Application.Interfaces;
 using WebAPINetCoreDDD.Domain.Entities;
 
 namespace WebAPINetCoreDDD.Api.Controllers;
@@ -34,7 +32,8 @@ public class UsuarioController : ControllerBase
     public async Task<IActionResult> AddUser(Usuario usuario)
     {
         await _usuarioRepository.AdicionarAsync(usuario);
-        return CreatedAtAction(nameof(GetUser), new { id = usuario.Id }, usuario);
+        return Ok(usuario);
+        //return CreatedAtAction(nameof(GetUser), new { id = usuario.Id }, usuario);
     }
 
     [HttpPut("{id}")]

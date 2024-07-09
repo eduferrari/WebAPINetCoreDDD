@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using WebAPINetCoreDDD.Application.Interfaces;
+﻿using WebAPINetCoreDDD.Application.Interfaces;
 using WebAPINetCoreDDD.Domain.Entities;
-using WebAPINetCoreDDD.Persistence.Repositories;
 
 namespace WebAPINetCoreDDD.Api.Controllers;
 [ApiController]
@@ -33,20 +29,21 @@ public class ProdutoController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Adicionar(Produto Produto)
+    public async Task<IActionResult> Adicionar(Produto produto)
     {
-        await _produtoRepository.AdicionarAsync(Produto);
-        return CreatedAtAction(nameof(Produto), new { id = Produto.Id }, Produto);
+        await _produtoRepository.AdicionarAsync(produto);
+        return Ok(produto);
+        //return CreatedAtAction(nameof(produto), new { id = produto.Id }, produto);
     }
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Atualizar(int id, Produto Produto)
+    public async Task<IActionResult> Atualizar(int id, Produto produto)
     {
-        if (id != Produto.Id) return BadRequest();
+        if (id != produto.Id) return BadRequest();
 
-        await _produtoRepository.AtualizarAsync(Produto);
-        return Ok(Produto);
+        await _produtoRepository.AtualizarAsync(produto);
+        return Ok(produto);
     }
 
     [HttpDelete("{id}")]
