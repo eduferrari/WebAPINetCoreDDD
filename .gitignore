@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 *.db-shm
 *.db-wal
+/WebAPINetCoreDDD.Api/Data/app.db-shm
+/WebAPINetCoreDDD.Api/Data/app.db-wal
