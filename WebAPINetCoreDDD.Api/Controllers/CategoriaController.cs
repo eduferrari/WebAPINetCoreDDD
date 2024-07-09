@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using WebAPINetCoreDDD.Application.Interfaces;
+﻿using WebAPINetCoreDDD.Application.Interfaces;
 using WebAPINetCoreDDD.Domain.Entities;
 
 namespace WebAPINetCoreDDD.Api.Controllers;
@@ -34,7 +32,8 @@ public class CategoriaController : ControllerBase
     public async Task<IActionResult> Adicionar(Categoria categoria)
     {
         await _categoriaRepository.AdicionarAsync(categoria);
-        return CreatedAtAction(nameof(categoria), new { id = categoria.Id }, categoria);
+        return Ok(categoria);
+        //return CreatedAtAction(nameof(Categoria), new { id = categoria.Id }, categoria);
     }
 
     [HttpPut("{id}")]

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebAPINetCoreDDD.Application.Interfaces;
+﻿using WebAPINetCoreDDD.Application.Interfaces;
 
 namespace WebAPINetCoreDDD.Api.Controllers;
 [ApiController]
@@ -17,7 +16,7 @@ public class AutenticacaoController : ControllerBase
     public async Task<IActionResult> Login([FromBody] AutenticacaoModel autenticacao)
     {
         var token = await _autenticacaoService.Autenticacao(autenticacao.Email, autenticacao.Senha);
-        if (token == null) return Unauthorized();
+        if (token is null) return Unauthorized();
 
         return Ok(new { Token = token });
     }

@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
 using WebAPINetCoreDDD.Application.Interfaces;
 using WebAPINetCoreDDD.Infrastructure.Services;
 using WebAPINetCoreDDD.Persistence;
@@ -10,7 +5,6 @@ using WebAPINetCoreDDD.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddPersistence(builder.Configuration.GetConnectionString("SQLiteConnection"));
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -35,7 +29,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -63,18 +56,30 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
+
+builder.Services.AddCors();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.UseCors(option => option.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin());
 
 app.MapControllers();
 
