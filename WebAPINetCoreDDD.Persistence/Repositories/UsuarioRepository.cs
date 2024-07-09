@@ -14,17 +14,17 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task<Usuario> ValidarLoginAsync(string email, string senha)
     {
-        return await _context.Usuarios.SingleOrDefaultAsync(u => u.Email == email && u.Senha == senha);
+        return await _context.Usuarios.SingleOrDefaultAsync(x => x.Email == email && x.Senha == senha && x.Status != Status.Deletado);
     }
 
     public async Task<IEnumerable<Usuario>> ListarTodosAsync()
     {
-        return await _context.Usuarios.ToListAsync();
+        return await _context.Usuarios.Where(x => x.Status != Status.Deletado).ToListAsync();
     }
 
     public async Task<Usuario> BuscarPorIdAsync(int id)
     {
-        return await _context.Usuarios.FindAsync(id);
+        return await _context.Usuarios.Where(x => x.Status != Status.Deletado && x.Id == id).FirstOrDefaultAsync();
     }
 
     public async Task AdicionarAsync(Usuario usuario)
@@ -42,10 +42,12 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task DeletarAsync(int id)
     {
-        var user = await _context.Usuarios.FindAsync(id);
-        if (user != null)
+        var usuario = await _context.Usuarios.FindAsync(id);
+        if (usuario is null)
         {
-            _context.Usuarios.Remove(user);
+            usuario.Status = Status.Deletado;
+
+            _context.Usuarios.Update(usuario);
             await _context.SaveChangesAsync();
         }
     }

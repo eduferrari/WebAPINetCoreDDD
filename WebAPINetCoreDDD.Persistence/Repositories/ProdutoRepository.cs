@@ -14,12 +14,12 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<IEnumerable<Produto>> ListarTodosAsync()
     {
-        return await _context.Produtos.ToListAsync();
+        return await _context.Produtos.Where(x => x.Status != Status.Deletado).ToListAsync();
     }
 
     public async Task<Produto> BuscarPorIdAsync(int id)
     {
-        return await _context.Produtos.FindAsync(id);
+        return await _context.Produtos.Where(x => x.Status != Status.Deletado && x.Id == id).FirstOrDefaultAsync();
     }
 
     public async Task AdicionarAsync(Produto produto)
@@ -37,9 +37,11 @@ public class ProdutoRepository : IProdutoRepository
     public async Task DeletarAsync(int id)
     {
         var produto = await _context.Produtos.FindAsync(id);
-        if (produto != null)
+        if (produto is null)
         {
-            _context.Produtos.Remove(produto);
+            produto.Status = Status.Deletado;
+
+            _context.Produtos.Update(produto);
             await _context.SaveChangesAsync();
         }
     }
