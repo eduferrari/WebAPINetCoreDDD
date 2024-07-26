@@ -31,9 +31,11 @@ public class UsuarioController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddUser(Usuario usuario)
     {
+        var validaUsuarioExistente = await _usuarioRepository.VerificaSeUsuarioJaCadastrado(usuario.Email);
+        if (validaUsuarioExistente) return BadRequest();
+
         await _usuarioRepository.AdicionarAsync(usuario);
         return Ok(usuario);
-        //return CreatedAtAction(nameof(GetUser), new { id = usuario.Id }, usuario);
     }
 
     [HttpPut("{id}")]
