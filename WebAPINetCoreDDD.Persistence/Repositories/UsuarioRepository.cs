@@ -51,4 +51,9 @@ public class UsuarioRepository : IUsuarioRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<bool> VerificaSeUsuarioJaCadastrado(string username)
+    {
+        return await _context.Usuarios.Where(r=> r.Email == username && r.Status != Status.Deletado).AnyAsync();
+    }
 }

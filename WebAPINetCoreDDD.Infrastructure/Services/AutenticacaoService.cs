@@ -20,7 +20,7 @@ public class AutenticacaoService : IAutenticacaoService
     public async Task<string> Autenticacao(string email, string senha)
     {
         var usuario = await _usuarioRepository.ValidarLoginAsync(email, senha);
-        if (usuario == null) return null;
+        if (usuario.Id == 0) return null;
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
