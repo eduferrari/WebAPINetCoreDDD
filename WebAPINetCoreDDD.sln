@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPINetCoreDDD.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPINetCoreDDD.Persistence", "WebAPINetCoreDDD.Persistence\WebAPINetCoreDDD.Persistence.csproj", "{34ECBF6A-2207-4DBC-96DF-AA569F1EF844}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPINetCoreDDD.Tests.Unit", "WebAPINetCoreDDD.Tests.Unit\WebAPINetCoreDDD.Tests.Unit.csproj", "{D4496A8E-57A7-4EA8-8C42-F6A039364E77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{34ECBF6A-2207-4DBC-96DF-AA569F1EF844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34ECBF6A-2207-4DBC-96DF-AA569F1EF844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34ECBF6A-2207-4DBC-96DF-AA569F1EF844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4496A8E-57A7-4EA8-8C42-F6A039364E77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4496A8E-57A7-4EA8-8C42-F6A039364E77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4496A8E-57A7-4EA8-8C42-F6A039364E77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4496A8E-57A7-4EA8-8C42-F6A039364E77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
